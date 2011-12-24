@@ -19,9 +19,22 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-var common = require('../common');
-var assert = require('assert');
-var a = require('assert');
+var assert = require('../assert');
+var a = require('../assert');
+
+var common = {
+  protoCtrChain: function(o) {
+    var result = [];
+    for (; o; o = o.__proto__) { result.push(o.constructor); }
+    return result.join();
+  },
+  indirectInstanceOf: function(obj, cls) {
+    if (obj instanceof cls) { return true; }
+    var clsChain = protoCtrChain(cls.prototype);
+    var objChain = protoCtrChain(obj);
+    return objChain.slice(-clsChain.length) === clsChain;
+  }
+};
 
 function makeBlock(f) {
   var args = Array.prototype.slice.call(arguments, 1);
