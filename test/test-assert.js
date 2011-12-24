@@ -22,8 +22,12 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-var assert = require('../assert');
-var a = require('../assert');
+if(typeof require === 'function') {
+  var assert = require('../assert');
+  var a = require('../assert');
+} else {
+  var a = assert;
+};
 
 var common = {
   protoCtrChain: function(o) {
