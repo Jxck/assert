@@ -2,6 +2,8 @@
 //
 // THIS IS NOT TESTED NOR LIKELY TO WORK OUTSIDE V8!
 //
+// Copyright (c) 2011 Jxck
+//
 // Originally from node.js (http://nodejs.org)
 // Copyright Joyent, Inc.
 //
