@@ -22,6 +22,8 @@
 // ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+(function(global) {
+
 // UTILITY
 var util = require('util');
 var pSlice = Array.prototype.slice;
@@ -30,7 +32,13 @@ var pSlice = Array.prototype.slice;
 // AssertionError's when particular conditions are not met. The
 // assert module must conform to the following interface.
 
-var assert = module.exports = ok;
+var assert = ok;
+
+global['assert'] = assert;
+
+if (typeof module === 'object' && typeof module.exports === 'object') {
+  module.exports = assert;
+}
 
 // 2. The AssertionError is defined in assert.
 // new assert.AssertionError({ message: message,
@@ -324,3 +332,6 @@ assert.doesNotThrow = function(block, /*optional*/error, /*optional*/message) {
 };
 
 assert.ifError = function(err) { if (err) {throw err;}};
+
+})(this);
+
