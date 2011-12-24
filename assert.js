@@ -25,7 +25,20 @@
 (function(global) {
 
 // UTILITY
-var util = require('util');
+var util = {
+  inherits: function(ctor, superCtor) {
+    ctor.super_ = superCtor;
+    ctor.prototype = Object.create(superCtor.prototype, {
+      constructor: {
+        value: ctor,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+  }
+};
+
 var pSlice = Array.prototype.slice;
 
 // 1. The assert module provides functions that throw
