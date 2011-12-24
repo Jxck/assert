@@ -51,7 +51,7 @@ global['assert'] = assert;
 
 if (typeof module === 'object' && typeof module.exports === 'object') {
   module.exports = assert;
-}
+};
 
 // 2. The AssertionError is defined in assert.
 // new assert.AssertionError({ message: message,
