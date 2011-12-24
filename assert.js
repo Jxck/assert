@@ -2,8 +2,8 @@
 //
 // THIS IS NOT TESTED NOR LIKELY TO WORK OUTSIDE V8!
 //
-// Originally from narwhal.js (http://narwhaljs.org)
-// Copyright (c) 2009 Thomas Robinson <280north.com>
+// Originally from node.js (http://nodejs.org)
+// Copyright Joyent, Inc.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the 'Software'), to
