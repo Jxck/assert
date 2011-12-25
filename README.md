@@ -1,19 +1,16 @@
 # Assert.js
 
-this Assert.js is porting of [Node.js standard assertion library] for browser.
-original code and test is comming from node.js, and modify them to browser compatible.
+Assert.js is a port of the Node.js standard assertion library for the browser.
+The original code and tests are from Node.js, and have been modified to be browser compatible.
 
-you can use this Assert.js for testing on browser.
-for example [Mocha](http://visionmedia.github.com/mocha/) can test on bi-side, but dosen't has assertion itself.
+For example, you can use it with [Mocha](http://visionmedia.github.com/mocha/) to perform tests
+on the **both-sides** (server-side and client-side). Mocha does not supply it's own assertion library.
 
+## run the same tests on both the client-side and server-side
 
-## run test in **bi-side**
+You can use the standard assert module when running mocha on Node.js.
 
-actuary, this Assert.js can running on node.js too.
-you can use node.js standard assert module when running mocha on node.js.
-and same test will run on browser if you read this library in browser.
-this helps you, when you writes **Bi-Side JavaScript**
-
+The same tests will run in the browser if you use this library.
 
 ## how to use
 
@@ -38,4 +35,4 @@ All OK
 
 ## license
 
-MIT as same as Node.js
+MIT (same as Node.js)
