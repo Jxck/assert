@@ -23,7 +23,7 @@ The same tests will run in the browser if you use this library.
 ## running test of this library
 
 ### browser
-open test/index.html in your browser,
+open ```test/index.html``` in your browser,
 and see the console.
 
 ### node.js
