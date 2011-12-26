@@ -1,6 +1,6 @@
-# Assert.js
+# assert.js
 
-Assert.js is a port of the Node.js standard assertion library for the browser.
+assert.js is a port of the Node.js standard assertion library for the browser.
 The original code and tests are from Node.js, and have been modified to be browser compatible.
 
 For example, you can use it with [Mocha](http://visionmedia.github.com/mocha/) to perform tests
