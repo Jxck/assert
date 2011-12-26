@@ -4,7 +4,7 @@ assert.js is a port of the Node.js standard assertion library for the browser.
 The original code and tests are from Node.js, and have been modified to be browser compatible.
 
 For example, you can use it with [Mocha](http://visionmedia.github.com/mocha/) to perform tests
-on the **both-sides** (server-side and client-side). Mocha does not supply it's own assertion library.
+on the **both sides** (server-side and client-side). Mocha does not supply it's own assertion library.
 
 ## run the same tests on both the client-side and server-side
 
