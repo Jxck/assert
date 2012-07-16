@@ -26,11 +26,19 @@
 
 (function(global) {
 
+// Object.create compatible in IE
+var create = Object.create || function(p) {
+  if (!p) throw Error('no type');
+  function f() {};
+  f.prototype = p;
+  return new f();
+};
+
 // UTILITY
 var util = {
   inherits: function(ctor, superCtor) {
     ctor.super_ = superCtor;
-    ctor.prototype = Object.create(superCtor.prototype, {
+    ctor.prototype = create(superCtor.prototype, {
       constructor: {
         value: ctor,
         enumerable: false,
