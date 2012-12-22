@@ -366,5 +366,11 @@ assert.doesNotThrow = function(block, /*optional*/error, /*optional*/message) {
 
 assert.ifError = function(err) { if (err) {throw err;}};
 
+if (typeof define === 'function' && define.amd) {
+  define('assert', function () {
+    return assert;
+  });
+}
+
 })(this);
 

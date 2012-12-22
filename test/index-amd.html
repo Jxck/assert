@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Test Assert</title>
+    <script type="text/javascript" src="require.js"></script>
+    <script type="text/javascript">
+    require(['../assert'], function () {
+      var tag = document.createElement('script');
+      tag.setAttribute('type', 'text/javascript');
+      tag.setAttribute('src', 'test-assert.js');
+      document.getElementsByTagName('head')[0].appendChild(tag);
+    });
+    </script>
+  </head>
+  <body>
+    <h1>Test Assert</h1>
+    <p>Please see the console output</p>
+    <p>If all test has passed, you can see <strong>All OK</strong></p>
+  </body>
+</html>
