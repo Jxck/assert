@@ -22,7 +22,8 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-if(typeof require === 'function') {
+if (typeof define !== 'function' &&
+    typeof require === 'function') {
   var assert = require('../assert');
   var a = require('../assert');
 } else {
