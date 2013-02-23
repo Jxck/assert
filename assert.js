@@ -51,6 +51,16 @@ var util = {
 
 var pSlice = Array.prototype.slice;
 
+// from https://github.com/substack/node-deep-equal
+var Object_keys = typeof Object.keys === 'function'
+    ? Object.keys
+    : function (obj) {
+        var keys = [];
+        for (var key in obj) keys.push(key);
+        return keys;
+    }
+;
+
 // 1. The assert module provides functions that throw
 // AssertionError's when particular conditions are not met. The
 // assert module must conform to the following interface.
@@ -249,8 +259,8 @@ function objEquiv(a, b) {
     return _deepEqual(a, b);
   }
   try {
-    var ka = Object.keys(a),
-        kb = Object.keys(b),
+    var ka = Object_keys(a),
+        kb = Object_keys(b),
         key, i;
   } catch (e) {//happens when one is a string literal and the other isn't
     return false;
