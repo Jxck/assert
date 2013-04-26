@@ -4,8 +4,8 @@
   "author": "Jxck <block.rxckin.beats@gmail.com>",
   "description": "Porting Node.js assert.js to browser",
   "contributors": [
-    "Jxck <block.rxckin.beats@gmail.com>"
-    "Oscar Godson <oscargodson@gmail.com>",
+    "Jxck <block.rxckin.beats@gmail.com>",
+    "Oscar Godson <oscargodson@gmail.com>"
   ],
   "repository": "git@github.com:Jxck/assert.git"
 }
