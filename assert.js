@@ -88,6 +88,12 @@ assert.AssertionError = function AssertionError(options) {
 
   if (Error.captureStackTrace) {
     Error.captureStackTrace(this, stackStartFunction);
+  } else {
+    // try to throw an error now, and from the stack property
+    // work out the line that called in to assert.js.
+    try {
+      this.stack = (new Error).stack.toString();
+    } catch (e) {}
   }
 };
 
