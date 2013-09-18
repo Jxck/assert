@@ -166,6 +166,7 @@ assert.fail = fail;
 // assert.strictEqual(true, guard, message_opt);.
 
 function ok(value, message) {
+  if (!message) message = 'Value is expected to be truthful; Got ' + value;
   if (!!!value) fail(value, true, message, '==', assert.ok);
 }
 assert.ok = ok;
@@ -175,6 +176,7 @@ assert.ok = ok;
 // assert.equal(actual, expected, message_opt);
 
 assert.equal = function equal(actual, expected, message) {
+  if (!message) message = 'Values are expected to be equal; Got ' + actual + ' and expected ' + expected;
   if (actual != expected) fail(actual, expected, message, '==', assert.equal);
 };
 
@@ -182,6 +184,7 @@ assert.equal = function equal(actual, expected, message) {
 // with != assert.notEqual(actual, expected, message_opt);
 
 assert.notEqual = function notEqual(actual, expected, message) {
+  if (!message) message = 'Values are expected to not be equal; Got ' + actual;
   if (actual == expected) {
     fail(actual, expected, message, '!=', assert.notEqual);
   }
@@ -191,6 +194,7 @@ assert.notEqual = function notEqual(actual, expected, message) {
 // assert.deepEqual(actual, expected, message_opt);
 
 assert.deepEqual = function deepEqual(actual, expected, message) {
+  if (!message) message = 'Values are expected to be deeply equal; Got ' + actual + ' and expected ' + expected;
   if (!_deepEqual(actual, expected)) {
     fail(actual, expected, message, 'deepEqual', assert.deepEqual);
   }
@@ -296,6 +300,7 @@ function objEquiv(a, b) {
 // assert.notDeepEqual(actual, expected, message_opt);
 
 assert.notDeepEqual = function notDeepEqual(actual, expected, message) {
+  if (!message) message = 'Values are expected to not be deeply equal; Got ' + actual;
   if (_deepEqual(actual, expected)) {
     fail(actual, expected, message, 'notDeepEqual', assert.notDeepEqual);
   }
@@ -305,6 +310,7 @@ assert.notDeepEqual = function notDeepEqual(actual, expected, message) {
 // assert.strictEqual(actual, expected, message_opt);
 
 assert.strictEqual = function strictEqual(actual, expected, message) {
+  if (!message) message = 'Values are expected to be strictly equal; Got ' + actual + ' and expected ' + expected;
   if (actual !== expected) {
     fail(actual, expected, message, '===', assert.strictEqual);
   }
@@ -314,6 +320,7 @@ assert.strictEqual = function strictEqual(actual, expected, message) {
 // determined by !==.  assert.notStrictEqual(actual, expected, message_opt);
 
 assert.notStrictEqual = function notStrictEqual(actual, expected, message) {
+  if (!message) message = 'Values are expected to not be strictly equal; Got ' + actual;
   if (actual === expected) {
     fail(actual, expected, message, '!==', assert.notStrictEqual);
   }
@@ -336,6 +343,7 @@ function expectedException(actual, expected) {
 }
 
 function _throws(shouldThrow, block, expected, message) {
+  if (!message) message = (shouldThrow) ?  'Function is expected to throw an error' : 'Function is expected to not throw an error';
   var actual;
 
   if (typeof expected === 'string') {
