@@ -1,5 +1,7 @@
 # assert.js
 
+**LATEST COMPATIBLE VERSION:** [node v0.11.10](https://github.com/joyent/node/blob/v0.11.10-release/lib/assert.js)
+
 assert.js is a port of the Node.js standard assertion library for the browser.
 The original code and tests are from Node.js, and have been modified to be browser compatible.
 
