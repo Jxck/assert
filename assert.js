@@ -142,7 +142,16 @@ assert.AssertionError = function AssertionError(options) {
     this.generatedMessage = true;
   }
   var stackStartFunction = options.stackStartFunction || fail;
-  Error.captureStackTrace(this, stackStartFunction);
+
+  if (Error.captureStackTrace) {
+    Error.captureStackTrace(this, stackStartFunction);
+  } else {
+    // try to throw an error now, and from the stack property
+    // work out the line that called in to assert.js.
+    try {
+      this.stack = (new Error).stack.toString();
+    } catch (e) {}
+  }
 };
 
 // assert.AssertionError instanceof Error
