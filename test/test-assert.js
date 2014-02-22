@@ -331,3 +331,99 @@ try {
   assert.equal(e.generatedMessage, false,
               'Message incorrectly marked as generated');
 }
+
+[
+  ['foo-bar', '-bar'],
+  ['foo-bar', /\-/],
+  [1, '1'],
+  [new Date(2014,1,1), new Date(2014,1,1)],
+  [/a/i, new RegExp('a', 'i')],
+  [ 
+    [1,2,3], 
+    [1,3] 
+  ],
+  [ 
+    [1, [2, 3, 4]], 
+    [[3]] 
+  ],
+  [
+    {foo: null}, 
+    'foo'
+  ],
+  [
+    {foo: null, baz: 'baz'}, 
+    {foo: null, baz: null}
+  ],
+  [
+    {foo: null, baz: 'baz'}, 
+    {baz: 'baz'}
+  ],
+  [
+    {foo: { qux: 'quux' }, baz: 'baz'}, 
+    {foo: { qux: 'quux'} }
+  ],
+  [
+    [ {a: { b: 'b',  c: 'c'}}, {a: { b: 'b', c: { d: 'd' }}} ],
+    [ {a: { c: { d: 'd' }}} ],
+  ]
+]
+.forEach(function(test){
+  //assert.doesNotThrow(makeBlock(a.has, test[0], test[1]), a.AssertionError, {
+  a.has(test[0], test[1], {
+    toString: function() {
+      return 'has failed \n' 
+        + JSON.stringify(test[0]) 
+        + '\n'
+        + JSON.stringify(test[1])
+        ;
+    }
+  });
+});
+
+[
+  ['foo-bar', '-bar '],
+  ['foo-bar', /\d/],
+  [1, '1 '],
+  [new Date(2014,1,1), new Date(2014,1,2)],
+  [/a/i, new RegExp('a', 'g')],
+  [ 
+    [1,2,3], 
+    [3, 4] 
+  ],
+  [ 
+    [1, [2, 3, 4]], 
+    [[1]] 
+  ],
+  [
+    {foo: null}, 
+    'bar'
+  ],
+  [
+    {foo: null, baz: 'baz'}, 
+    {foo: null, bar: null}
+  ],
+  [
+    {foo: null, baz: 'baz'}, 
+    {baz: 'bar'}
+  ],
+  [
+    {foo: { qux: 'quux' }, baz: 'baz'}, 
+    {foo: { baz: 'quux'} }
+  ],
+  [
+    [ {a: { b: 'b',  c: 'c'}}, {a: { b: 'b', c: { d: 'd' }}} ],
+    [ {a: { x: { d: 'd' }}} ],
+  ]
+]
+.forEach(function(test){
+  //assert.doesNotThrow(makeBlock(a.has, test[0], test[1]), a.AssertionError, {
+  a.hasNot(test[0], test[1], {
+    toString: function() {
+      return 'hasNot failed \n' 
+        + JSON.stringify(test[0]) 
+        + '\n'
+        + JSON.stringify(test[1])
+        ;
+    }
+  });
+});
