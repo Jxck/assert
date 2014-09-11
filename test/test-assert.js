@@ -1,6 +1,3 @@
-// Copyright (c) 2011 Jxck
-//
-// Originally from node.js (http://nodejs.org)
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -22,27 +19,11 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-if (typeof define !== 'function' &&
-    typeof require === 'function') {
-  var assert = require('../assert');
-  var a = require('../assert');
-} else {
-  var a = assert;
-};
+(function(require) {
 
-var common = {
-  protoCtrChain: function(o) {
-    var result = [];
-    for (; o; o = o.__proto__) { result.push(o.constructor); }
-    return result.join();
-  },
-  indirectInstanceOf: function(obj, cls) {
-    if (obj instanceof cls) { return true; }
-    var clsChain = protoCtrChain(cls.prototype);
-    var objChain = protoCtrChain(obj);
-    return objChain.slice(-clsChain.length) === clsChain;
-  }
-};
+// var common = require('../common');
+var assert = require('assert');
+var a = require('assert');
 
 function makeBlock(f) {
   var args = Array.prototype.slice.call(arguments, 1);
@@ -51,8 +32,8 @@ function makeBlock(f) {
   };
 }
 
-assert.ok(common.indirectInstanceOf(a.AssertionError.prototype, Error),
-          'a.AssertionError instanceof Error');
+// assert.ok(common.indirectInstanceOf(a.AssertionError.prototype, Error),
+//           'a.AssertionError instanceof Error');
 
 assert.throws(makeBlock(a, false), a.AssertionError, 'ok(false)');
 
@@ -270,6 +251,11 @@ try {
   gotError = true;
 }
 
+// GH-7178. Ensure reflexivity of deepEqual with `arguments` objects.
+var args = (function() { return arguments; })();
+a.throws(makeBlock(a.deepEqual, [], args));
+a.throws(makeBlock(a.deepEqual, args, []));
+
 console.log('All OK');
 assert.ok(gotError);
 
@@ -331,3 +317,9 @@ try {
   assert.equal(e.generatedMessage, false,
               'Message incorrectly marked as generated');
 }
+
+})(function require(name) {
+  if (this[name]) {
+    return this[name];
+  }
+});

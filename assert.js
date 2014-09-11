@@ -24,7 +24,13 @@
 // ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-(function(global) {
+(function(module) {
+
+if (typeof module.exports === 'undefined') {
+  module.exports = module; // this case must be browser
+}
+
+// UTILITY
 
 // Object.create compatible in IE
 var create = Object.create || function(p) {
@@ -116,13 +122,7 @@ var Object_keys = typeof Object.keys === 'function'
 // AssertionError's when particular conditions are not met. The
 // assert module must conform to the following interface.
 
-var assert = ok;
-
-global['assert'] = assert;
-
-if (typeof module === 'object' && typeof module.exports === 'object') {
-  module.exports = assert;
-};
+var assert = module.exports = ok;
 
 // 2. The AssertionError is defined in assert.
 // new assert.AssertionError({ message: message,
@@ -142,16 +142,7 @@ assert.AssertionError = function AssertionError(options) {
     this.generatedMessage = true;
   }
   var stackStartFunction = options.stackStartFunction || fail;
-
-  if (Error.captureStackTrace) {
-    Error.captureStackTrace(this, stackStartFunction);
-  } else {
-    // try to throw an error now, and from the stack property
-    // work out the line that called in to assert.js.
-    try {
-      this.stack = (new Error).stack.toString();
-    } catch (e) {}
-  }
+  Error.captureStackTrace(this, stackStartFunction);
 };
 
 // assert.AssertionError instanceof Error
@@ -251,15 +242,15 @@ function _deepEqual(actual, expected) {
   if (actual === expected) {
     return true;
 
-  // } else if (util.isBuffer(actual) && util.isBuffer(expected)) {
-  //   if (actual.length != expected.length) return false;
+  //  } else if (util.isBuffer(actual) && util.isBuffer(expected)) {
+  //    if (actual.length != expected.length) return false;
   //
-  //   for (var i = 0; i < actual.length; i++) {
-  //     if (actual[i] !== expected[i]) return false;
-  //   }
+  //    for (var i = 0; i < actual.length; i++) {
+  //      if (actual[i] !== expected[i]) return false;
+  //    }
   //
-  //   return true;
-
+  //    return true;
+  //
   // 7.2. If the expected value is a Date object, the actual value is
   // equivalent if it is also a Date object that refers to the same time.
   } else if (util.isDate(actual) && util.isDate(expected)) {
@@ -302,17 +293,18 @@ function objEquiv(a, b) {
   if (a.prototype !== b.prototype) return false;
   //~~~I've managed to break Object.keys through screwy arguments passing.
   //   Converting to array solves the problem.
-  if (isArguments(a)) {
-    if (!isArguments(b)) {
-      return false;
-    }
+  var aIsArgs = isArguments(a),
+      bIsArgs = isArguments(b);
+  if ((aIsArgs && !bIsArgs) || (!aIsArgs && bIsArgs))
+    return false;
+  if (aIsArgs) {
     a = pSlice.call(a);
     b = pSlice.call(b);
     return _deepEqual(a, b);
   }
   try {
-    var ka = Object_keys(a),
-        kb = Object_keys(b),
+    var ka = Object.keys(a),
+        kb = Object.keys(b),
         key, i;
   } catch (e) {//happens when one is a string literal and the other isn't
     return false;
@@ -426,11 +418,6 @@ assert.doesNotThrow = function(block, /*optional*/message) {
 
 assert.ifError = function(err) { if (err) {throw err;}};
 
-if (typeof define === 'function' && define.amd) {
-  define('assert', function () {
-    return assert;
-  });
-}
-
+module.assert = module.exports;
+delete module.exports;
 })(this);
-
