@@ -1,0 +1,21 @@
+{
+  "name": "node-assert",
+  "main": "assert.js",
+  "version": "0.11.13",
+  "homepage": "https://github.com/jxck/assert",
+  "description": "browser porting of assert.js in node.js",
+  "keywords": [
+    "assert"
+  ],
+  "authors": [
+    "Jxck"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
