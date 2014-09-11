@@ -1,6 +1,6 @@
 # assert.js
 
-**LATEST COMPATIBLE VERSION:** [node v0.11.10](https://github.com/joyent/node/blob/v0.11.10-release/lib/assert.js)
+**LATEST COMPATIBLE VERSION:** [node v0.11.13](https://github.com/joyent/node/blob/v0.11.13-release/lib/assert.js)
 
 assert.js is a port of the Node.js standard assertion library for the browser.
 The original code and tests are from Node.js, and have been modified to be browser compatible.
@@ -16,6 +16,10 @@ The same tests will run in the browser if you use this library.
 
 ## how to use
 
+```sh
+$ bower install https://github.com/Jxck/assert
+```
+
 ```html
 <script src="assert.js"></script>
 <script src="path/to/testing-framework.js"></script>
@@ -25,15 +29,9 @@ The same tests will run in the browser if you use this library.
 ## running test of this library
 
 ### browser
+
 open ```test/index.html``` in your browser,
 and see the console.
-
-### node.js
-
-```shell
-> node test/test-assert.js
-All OK
-```
 
 ## license
 
