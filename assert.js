@@ -427,5 +427,4 @@ assert.doesNotThrow = function(block, /*optional*/message) {
 assert.ifError = function(err) { if (err) {throw err;}};
 
 module.assert = module.exports;
-delete module.exports;
 })(this);
