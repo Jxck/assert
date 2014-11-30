@@ -24,11 +24,15 @@
 // ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-(function(module) {
-
-if (typeof module.exports === 'undefined') {
-  module.exports = module; // this case must be browser
-}
+(function(root, factory) {
+  if (typeof define === 'function' && define.amd) {
+    define([], factory); // AMD
+  } else if (typeof exports === 'object') {
+    module.exports = factory(); // CommonJS
+  } else {
+    root.assert = factory(); // Global
+  }
+})(this, function() {
 
 // UTILITY
 
@@ -122,7 +126,7 @@ var Object_keys = typeof Object.keys === 'function'
 // AssertionError's when particular conditions are not met. The
 // assert module must conform to the following interface.
 
-var assert = module.exports = ok;
+var assert = ok;
 
 // 2. The AssertionError is defined in assert.
 // new assert.AssertionError({ message: message,
@@ -426,5 +430,5 @@ assert.doesNotThrow = function(block, /*optional*/message) {
 
 assert.ifError = function(err) { if (err) {throw err;}};
 
-module.assert = module.exports;
-})(this);
+return assert;
+});

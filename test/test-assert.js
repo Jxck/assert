@@ -19,11 +19,17 @@
 // OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 // USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-(function(require) {
+(function(root, factory) {
+    if (typeof define === 'function' && define.amd) {
+        define(['../assert'], factory); // AMD
+    } else if (typeof exports === 'object') {
+        factory(require('../assert')); // CommonJS
+    } else {
+        factory(root.assert); // Global
+    }
+})(this, function(assert) {
 
-// var common = require('../common');
-var assert = require('assert');
-var a = require('assert');
+var a = assert;
 
 function makeBlock(f) {
   var args = Array.prototype.slice.call(arguments, 1);
@@ -31,9 +37,6 @@ function makeBlock(f) {
     return f.apply(this, args);
   };
 }
-
-// assert.ok(common.indirectInstanceOf(a.AssertionError.prototype, Error),
-//           'a.AssertionError instanceof Error');
 
 assert.throws(makeBlock(a, false), a.AssertionError, 'ok(false)');
 
@@ -256,7 +259,6 @@ var args = (function() { return arguments; })();
 a.throws(makeBlock(a.deepEqual, [], args));
 a.throws(makeBlock(a.deepEqual, args, []));
 
-console.log('All OK');
 assert.ok(gotError);
 
 
@@ -306,20 +308,17 @@ assert.ok(threw);
 try {
   assert.equal(1, 2);
 } catch (e) {
-  assert.equal(e.toString().split('\n')[0], 'AssertionError: 1 == 2')
+  assert.equal(e.toString().split('\n')[0], 'AssertionError: 1 == 2');
   assert.ok(e.generatedMessage, 'Message not marked as generated');
 }
 
 try {
   assert.equal(1, 2, 'oh no');
 } catch (e) {
-  assert.equal(e.toString().split('\n')[0], 'AssertionError: oh no')
+  assert.equal(e.toString().split('\n')[0], 'AssertionError: oh no');
   assert.equal(e.generatedMessage, false,
               'Message incorrectly marked as generated');
 }
 
-})(function require(name) {
-  if (this[name]) {
-    return this[name];
-  }
+console.log('All OK');
 });
