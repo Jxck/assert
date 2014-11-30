@@ -38,6 +38,14 @@ function makeBlock(f) {
   };
 }
 
+var Object_keys = typeof Object.keys === 'function'
+    ? Object.keys
+    : function (obj) {
+        var keys = [];
+        for (var key in obj) keys.push(key);
+        return keys;
+    };
+
 assert.throws(makeBlock(a, false), a.AssertionError, 'ok(false)');
 
 assert.doesNotThrow(makeBlock(a, true), a.AssertionError, 'ok(true)');
@@ -126,7 +134,7 @@ a1.a = 'test';
 a1.b = true;
 a2.b = true;
 a2.a = 'test';
-assert.throws(makeBlock(a.deepEqual, Object.keys(a1), Object.keys(a2)),
+assert.throws(makeBlock(a.deepEqual, Object_keys(a1), Object_keys(a2)),
               a.AssertionError);
 assert.doesNotThrow(makeBlock(a.deepEqual, a1, a2));
 

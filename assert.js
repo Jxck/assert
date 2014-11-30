@@ -315,8 +315,8 @@ function objEquiv(a, b) {
     return _deepEqual(a, b);
   }
   try {
-    var ka = Object.keys(a),
-        kb = Object.keys(b),
+    var ka = Object_keys(a),
+        kb = Object_keys(b),
         key, i;
   } catch (e) {//happens when one is a string literal and the other isn't
     return false;
