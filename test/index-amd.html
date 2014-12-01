@@ -2,15 +2,7 @@
 <html>
   <head>
     <title>Test Assert</title>
-    <script type="text/javascript" src="http://requirejs.org/docs/release/2.1.2/comments/require.js"></script>
-    <script type="text/javascript">
-    require(['../assert'], function () {
-      var tag = document.createElement('script');
-      tag.setAttribute('type', 'text/javascript');
-      tag.setAttribute('src', 'test-assert.js');
-      document.getElementsByTagName('head')[0].appendChild(tag);
-    });
-    </script>
+    <script data-main="./test-assert" src="http://requirejs.org/docs/release/2.1.15/comments/require.js"></script>
   </head>
   <body>
     <h1>Test Assert</h1>
