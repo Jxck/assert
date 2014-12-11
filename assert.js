@@ -112,15 +112,44 @@ var util = {
 
 var pSlice = Array.prototype.slice;
 
-// from https://github.com/substack/node-deep-equal
-var Object_keys = typeof Object.keys === 'function'
-    ? Object.keys
-    : function (obj) {
-        var keys = [];
-        for (var key in obj) keys.push(key);
-        return keys;
+// From https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys
+var Object_keys = typeof Object.keys === 'function' ? Object.keys : (function() {
+  var hasOwnProperty = Object.prototype.hasOwnProperty,
+      hasDontEnumBug = !({ toString: null }).propertyIsEnumerable('toString'),
+      dontEnums = [
+        'toString',
+        'toLocaleString',
+        'valueOf',
+        'hasOwnProperty',
+        'isPrototypeOf',
+        'propertyIsEnumerable',
+        'constructor'
+      ],
+      dontEnumsLength = dontEnums.length;
+
+  return function(obj) {
+    if (typeof obj !== 'object' && (typeof obj !== 'function' || obj === null)) {
+      throw new TypeError('Object.keys called on non-object');
     }
-;
+
+    var result = [], prop, i;
+
+    for (prop in obj) {
+      if (hasOwnProperty.call(obj, prop)) {
+        result.push(prop);
+      }
+    }
+
+    if (hasDontEnumBug) {
+      for (i = 0; i < dontEnumsLength; i++) {
+        if (hasOwnProperty.call(obj, dontEnums[i])) {
+          result.push(dontEnums[i]);
+        }
+      }
+    }
+    return result;
+  };
+})();
 
 // 1. The assert module provides functions that throw
 // AssertionError's when particular conditions are not met. The
