@@ -325,7 +325,7 @@ testAssertionMessage('foo', '"foo"');
 testAssertionMessage([], '[]');
 testAssertionMessage([1, 2, 3], '[1,2,3]');
 testAssertionMessage(/a/, '"/a/"');
-testAssertionMessage(/abc/gim, '"/abc/gim"');
+testAssertionMessage(/abc/g, '"/abc/g"');
 testAssertionMessage(function f() {}, '"function f() {}"');
 testAssertionMessage({}, '{}');
 testAssertionMessage({a: undefined, b: null}, '{"a":"undefined","b":null}');
