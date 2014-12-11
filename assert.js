@@ -323,9 +323,20 @@ function _deepEqual(actual, expected) {
   }
 }
 
-function isArguments(object) {
+var isArguments = function(object) {
   return Object.prototype.toString.call(object) == '[object Arguments]';
-}
+};
+
+(function() {
+  if (!isArguments(arguments)) {
+    isArguments = function(object) {
+      return object != null &&
+        typeof object === 'object' &&
+        typeof object.callee === 'function' &&
+        typeof object.length === 'number' || false;
+    };
+  }
+})();
 
 function objEquiv(a, b) {
   if (util.isNullOrUndefined(a) || util.isNullOrUndefined(b))
