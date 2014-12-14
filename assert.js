@@ -43,6 +43,11 @@ var create = Object.create || function(p) {
   f.prototype = p;
   return new f();
 };
+var toString = Object.prototype.toString;
+var isArray = Array.isArray = function(arg) {
+  return toString.call(arg) === '[object Array]';
+};
+
 
 // UTILITY
 var util = {
@@ -58,7 +63,7 @@ var util = {
     });
   },
   isArray: function(ar) {
-    return Array.isArray(ar);
+    return isArray(ar);
   },
   isBoolean: function(arg) {
     return typeof arg === 'boolean';
@@ -106,7 +111,7 @@ var util = {
       typeof arg === 'undefined';
   },
   objectToString: function(o) {
-    return Object.prototype.toString.call(o);
+    return toString.call(o);
   }
 };
 
@@ -295,7 +300,7 @@ function _deepEqual(actual, expected) {
 }
 
 function isArguments(object) {
-  return Object.prototype.toString.call(object) == '[object Arguments]';
+  return toString.call(object) == '[object Arguments]';
 }
 
 function objEquiv(a, b) {
@@ -374,7 +379,7 @@ function expectedException(actual, expected) {
     return false;
   }
 
-  if (Object.prototype.toString.call(expected) == '[object RegExp]') {
+  if (toString.call(expected) == '[object RegExp]') {
     return expected.test(actual);
   } else if (actual instanceof expected) {
     return true;
