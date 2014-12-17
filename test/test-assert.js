@@ -38,6 +38,45 @@ function makeBlock(f) {
   };
 }
 
+// From https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys
+var Object_keys = typeof Object.keys === 'function' ? Object.keys : (function() {
+  var hasOwnProperty = Object.prototype.hasOwnProperty,
+      hasDontEnumBug = !({ toString: null }).propertyIsEnumerable('toString'),
+      dontEnums = [
+        'toString',
+        'toLocaleString',
+        'valueOf',
+        'hasOwnProperty',
+        'isPrototypeOf',
+        'propertyIsEnumerable',
+        'constructor'
+      ],
+      dontEnumsLength = dontEnums.length;
+
+  return function(obj) {
+    if (typeof obj !== 'object' && (typeof obj !== 'function' || obj === null)) {
+      throw new TypeError('Object.keys called on non-object');
+    }
+
+    var result = [], prop, i;
+
+    for (prop in obj) {
+      if (hasOwnProperty.call(obj, prop)) {
+        result.push(prop);
+      }
+    }
+
+    if (hasDontEnumBug) {
+      for (i = 0; i < dontEnumsLength; i++) {
+        if (hasOwnProperty.call(obj, dontEnums[i])) {
+          result.push(dontEnums[i]);
+        }
+      }
+    }
+    return result;
+  };
+})();
+
 assert.throws(makeBlock(a, false), a.AssertionError, 'ok(false)');
 
 assert.doesNotThrow(makeBlock(a, true), a.AssertionError, 'ok(true)');
@@ -126,7 +165,7 @@ a1.a = 'test';
 a1.b = true;
 a2.b = true;
 a2.a = 'test';
-assert.throws(makeBlock(a.deepEqual, Object.keys(a1), Object.keys(a2)),
+assert.throws(makeBlock(a.deepEqual, Object_keys(a1), Object_keys(a2)),
               a.AssertionError);
 assert.doesNotThrow(makeBlock(a.deepEqual, a1, a2));
 
@@ -286,7 +325,7 @@ testAssertionMessage('foo', '"foo"');
 testAssertionMessage([], '[]');
 testAssertionMessage([1, 2, 3], '[1,2,3]');
 testAssertionMessage(/a/, '"/a/"');
-testAssertionMessage(/abc/gim, '"/abc/gim"');
+testAssertionMessage(/abc/g, '"/abc/g"');
 testAssertionMessage(function f() {}, '"function f() {}"');
 testAssertionMessage({}, '{}');
 testAssertionMessage({a: undefined, b: null}, '{"a":"undefined","b":null}');
