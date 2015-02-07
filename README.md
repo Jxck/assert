@@ -1,12 +1,12 @@
 # assert.js
 
-**LATEST COMPATIBLE VERSION:** [node v0.11.13](https://github.com/joyent/node/blob/v0.11.13-release/lib/assert.js)
+**LATEST COMPATIBLE VERSION:** [node v0.12.0](https://github.com/joyent/node/blob/v0.12.0-release/lib/assert.js)
 
 assert.js is a port of the Node.js standard assertion library for the browser.
 The original code and tests are from Node.js, and have been modified to be browser compatible.
 
 For example, you can use it with [Mocha](http://visionmedia.github.com/mocha/) to perform tests
-on the **both sides** (server-side and client-side). Mocha does not supply it's own assertion library.
+as isomorphic (both on server and client). Mocha does not supply it's own assertion library.
 
 ## run the same tests on both the client-side and server-side
 
@@ -30,7 +30,7 @@ $ bower install https://github.com/Jxck/assert
 
 ### browser
 
-open ```test/index.html``` in your browser,
+open ```test/index.html``` and ```test/index-amd.html``` in your browser,
 and see the console.
 
 ## license
