@@ -1,12 +1,30 @@
 {
   "name": "assert",
-  "version": "1.0.0",
-  "author": "Jxck <block.rxckin.beats@gmail.com>",
   "description": "Porting Node.js assert.js to browser",
+  "version": "1.0.0",
+  "author": "Jxck",
+  "bugs": {
+    "url": "https://github.com/Jxck/assert/issues"
+  },
   "contributors": [
-    "Jxck <block.rxckin.beats@gmail.com>",
+    "David Bruant <bruant.d@gmail.com>",
     "Oscar Godson <oscargodson@gmail.com>",
-    "Remy Sharp <remy@remysharp.com>"
+    "Remy Sharp <remy@remysharp.com>",
+    "Salehen Shovon Rahman <salehen.rahman@gmail.com>",
+    "Takuto Wada <takuto.wada@gmail.com",
+    "Teppei Sato <teppeis@gmail.com>"
   ],
-  "repository": "git@github.com:Jxck/assert.git"
+  "homepage": "https://github.com/Jxck/assert",
+  "keywords": [
+    "assert"
+  ],
+  "license": "MIT (same as node.js)",
+  "main": "assert.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Jxck/assert"
+  },
+  "scripts": {
+    "test": "node test/test-assert.js"
+  }
 }
