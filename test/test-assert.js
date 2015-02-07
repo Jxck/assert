@@ -165,7 +165,7 @@ a1.a = 'test';
 a1.b = true;
 a2.b = true;
 a2.a = 'test';
-assert.throws(makeBlock(a.deepEqual, Object_keys(a1), Object_keys(a2)),
+assert.throws(makeBlock(a.deepEqual, Object.keys(a1), Object.keys(a2)),
               a.AssertionError);
 assert.doesNotThrow(makeBlock(a.deepEqual, a1, a2));
 
@@ -298,39 +298,44 @@ var args = (function() { return arguments; })();
 a.throws(makeBlock(a.deepEqual, [], args));
 a.throws(makeBlock(a.deepEqual, args, []));
 
+console.log('All OK');
 assert.ok(gotError);
 
 
-// #217
+var circular = {y: 1};
+circular.x = circular;
+
 function testAssertionMessage(actual, expected) {
   try {
     assert.equal(actual, '');
   } catch (e) {
     assert.equal(e.toString(),
-        ['AssertionError:', expected, '==', '""'].join(' '));
+        ['AssertionError:', expected, '==', '\'\''].join(' '));
     assert.ok(e.generatedMessage, "Message not marked as generated");
   }
 }
-testAssertionMessage(undefined, '"undefined"');
+testAssertionMessage(undefined, 'undefined');
 testAssertionMessage(null, 'null');
 testAssertionMessage(true, 'true');
 testAssertionMessage(false, 'false');
 testAssertionMessage(0, '0');
 testAssertionMessage(100, '100');
-testAssertionMessage(NaN, '"NaN"');
-testAssertionMessage(Infinity, '"Infinity"');
-testAssertionMessage(-Infinity, '"-Infinity"');
+testAssertionMessage(NaN, 'NaN');
+testAssertionMessage(Infinity, 'Infinity');
+testAssertionMessage(-Infinity, '-Infinity');
 testAssertionMessage('', '""');
-testAssertionMessage('foo', '"foo"');
+testAssertionMessage('foo', '\'foo\'');
 testAssertionMessage([], '[]');
-testAssertionMessage([1, 2, 3], '[1,2,3]');
-testAssertionMessage(/a/, '"/a/"');
-testAssertionMessage(/abc/g, '"/abc/g"');
-testAssertionMessage(function f() {}, '"function f() {}"');
+testAssertionMessage([1, 2, 3], '[ 1, 2, 3 ]');
+testAssertionMessage(/a/, '/a/');
+testAssertionMessage(/abc/gim, '/abc/gim');
+testAssertionMessage(function f() {}, '[Function: f]');
+testAssertionMessage(function () {}, '[Function]');
 testAssertionMessage({}, '{}');
-testAssertionMessage({a: undefined, b: null}, '{"a":"undefined","b":null}');
+testAssertionMessage(circular, '{ y: 1, x: [Circular] }');
+testAssertionMessage({a: undefined, b: null}, '{ a: undefined, b: null }');
 testAssertionMessage({a: NaN, b: Infinity, c: -Infinity},
-    '{"a":"NaN","b":"Infinity","c":"-Infinity"}');
+    '{ a: NaN, b: Infinity, c: -Infinity }');
 
 // #2893
 try {
@@ -347,17 +352,15 @@ assert.ok(threw);
 try {
   assert.equal(1, 2);
 } catch (e) {
-  assert.equal(e.toString().split('\n')[0], 'AssertionError: 1 == 2');
+  assert.equal(e.toString().split('\n')[0], 'AssertionError: 1 == 2')
   assert.ok(e.generatedMessage, 'Message not marked as generated');
 }
 
 try {
   assert.equal(1, 2, 'oh no');
 } catch (e) {
-  assert.equal(e.toString().split('\n')[0], 'AssertionError: oh no');
+  assert.equal(e.toString().split('\n')[0], 'AssertionError: oh no')
   assert.equal(e.generatedMessage, false,
               'Message incorrectly marked as generated');
 }
-
-console.log('All OK');
 });

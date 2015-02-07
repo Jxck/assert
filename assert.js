@@ -107,6 +107,34 @@ var util = {
   },
   objectToString: function(o) {
     return Object.prototype.toString.call(o);
+  },
+  inspect: function(obj, opts) {
+    function stylizeNoColor(str, styleType) {
+      return str;
+    }
+
+    // default options
+    var ctx = {
+      seen: [],
+      stylize: stylizeNoColor
+    };
+    // legacy...
+    if (arguments.length >= 3) ctx.depth = arguments[2];
+    if (arguments.length >= 4) ctx.colors = arguments[3];
+    if (isBoolean(opts)) {
+      // legacy...
+      ctx.showHidden = opts;
+    } else if (opts) {
+      // got an "options" object
+      // exports._extend(ctx, opts);
+    }
+    // set default options
+    if (isUndefined(ctx.showHidden)) ctx.showHidden = false;
+    if (isUndefined(ctx.depth)) ctx.depth = 2;
+    if (isUndefined(ctx.colors)) ctx.colors = false;
+    if (isUndefined(ctx.customInspect)) ctx.customInspect = true;
+    if (ctx.colors) ctx.stylize = stylizeWithColor;
+    return formatValue(ctx, obj, ctx.depth);
   }
 };
 
@@ -189,19 +217,6 @@ assert.AssertionError = function AssertionError(options) {
 // assert.AssertionError instanceof Error
 util.inherits(assert.AssertionError, Error);
 
-function replacer(key, value) {
-  if (util.isUndefined(value)) {
-    return '' + value;
-  }
-  if (util.isNumber(value) && (isNaN(value) || !isFinite(value))) {
-    return value.toString();
-  }
-  if (util.isFunction(value) || util.isRegExp(value)) {
-    return value.toString();
-  }
-  return value;
-}
-
 function truncate(s, n) {
   if (util.isString(s)) {
     return s.length < n ? s : s.slice(0, n);
@@ -211,9 +226,9 @@ function truncate(s, n) {
 }
 
 function getMessage(self) {
-  return truncate(JSON.stringify(self.actual, replacer), 128) + ' ' +
+  return truncate(util.inspect(self.actual, {depth: null}), 128) + ' ' +
          self.operator + ' ' +
-         truncate(JSON.stringify(self.expected, replacer), 128);
+         truncate(util.inspect(self.expected, {depth: null}), 128);
 }
 
 // At present only the three keys mentioned above are used and
@@ -291,7 +306,7 @@ function _deepEqual(actual, expected) {
   //    }
   //
   //    return true;
-  //
+
   // 7.2. If the expected value is a Date object, the actual value is
   // equivalent if it is also a Date object that refers to the same time.
   } else if (util.isDate(actual) && util.isDate(expected)) {
