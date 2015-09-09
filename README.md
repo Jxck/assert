@@ -1,3 +1,6 @@
+**CAUTION**: no plan to support node.js v4.0. and also this project stopped maintaining now, and will end of life at 2015/10. use [browserify](http://browserify.org/) instead.
+
+
 # assert.js
 
 **LATEST COMPATIBLE VERSION:** [node v0.12.0](https://github.com/joyent/node/blob/v0.12.0-release/lib/assert.js)
